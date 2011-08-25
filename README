@@ -1,10 +1,13 @@
 IRC Bot... (yeah very inspired title) 
 
-* Requires txmongo (https://github.com/fiorix/mongo-async-python-driver/)
+Requires:
+* twisted
+* txmongo (https://github.com/fiorix/mongo-async-python-driver/)
+* lxml
 
 A small irc bot that logs URLs posted in a IRC channel and store them in a mongodb. 
 It will also:
-    * download and store any images mentioned in the channel.
+    * download and store any images mentioned in a channel.
     * store quotes 
     * whatever...
 
