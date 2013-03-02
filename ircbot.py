@@ -20,11 +20,14 @@ db_file = '/Users/kyriakos/PycharmProjects/ircbot/ircbot.sqlite3'
 
 class IrcBot(irc.IRCClient):
 
+
     def __init__(self, *args, **kwargs):
-        self.init_db()
         self.plugins = {'privmsg': [self.url_plugin, self.cmd_plugin],
-                        'signedOn': [self.signon_plugin],
-                        'joined': [self.joined_plugin]}
+                   'signedOn': [self.signon_plugin],
+                   'joined': [self.joined_plugin]}
+        self.init_db()
+
+
 
     @defer.inlineCallbacks
     def init_db(self):
@@ -70,6 +73,7 @@ class IrcBot(irc.IRCClient):
     #############################################################################
 
     def signon_plugin(self):
+        self.setNick(self.factory.nickname)
         self.join(self.factory.channel)
         print "Signed on as %s." % (self.nickname,)
 
@@ -196,7 +200,6 @@ class IrcBot(irc.IRCClient):
         for p in self.plugins[self.funcname()]:
             p(user, channel, msg)
 
-
 class IrcBotFactory(protocol.ClientFactory):
     protocol = IrcBot
 
@@ -222,6 +225,7 @@ if __name__ == "__main__":
     server = sys.argv[1]
     channel = sys.argv[2]
     nick = sys.argv[3]
-    irc_factory = IrcBotFactory('#' + channel, nick)
+    print server, channel, nick
+    irc_factory = IrcBotFactory('#' + channel, nickname=nick)
     reactor.connectTCP(server, 6667, irc_factory)
     reactor.run()
