@@ -1,0 +1,5 @@
+ircbot.sqlite3
+files/*
+.idea/*
+quotes.txt
+admin.py
